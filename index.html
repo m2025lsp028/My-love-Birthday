@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday! 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================================= -->
+  <!-- 🎈 CUSTOMIZE HERE: change the name below to your girlfriend's -->
+  <!-- ============================================================= -->
+  <div id="config"
+       data-name="My Love"
+       data-birthday="2026-07-12">
+  </div>
+
+  <!-- Floating hearts / balloons background -->
+  <div class="floaties" aria-hidden="true"></div>
+
+  <!-- Music toggle -->
+  <button id="musicToggle" class="music-toggle" title="Play / pause music">🔇</button>
+  <!-- Optional: put a song file at music/song.mp3 to enable audio -->
+  <audio id="bgMusic" loop>
+    <source src="music/song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="pretitle">🎉 Today is a very special day 🎉</p>
+      <h1 class="title">Happy Birthday<br /><span id="heroName">My Love</span></h1>
+      <p class="subtitle">Scroll down for a little surprise made just for you 💝</p>
+      <div class="scroll-cue">⌄</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- INTRO MESSAGE -->
+    <section class="section message-block reveal">
+      <h2 class="section-title">To the most amazing person 💫</h2>
+      <p class="big-message">
+        Every day with you feels like a gift, but today the whole world gets to
+        celebrate the person who makes my life brighter. I made this little corner
+        of the internet just for you — happy birthday, my heart. ❤️
+      </p>
+    </section>
+
+    <!-- PHOTO SLIDESHOW -->
+    <section class="section reveal">
+      <h2 class="section-title">Our favorite moments 📸</h2>
+      <div class="slideshow">
+        <div class="slides" id="slides">
+          <!-- ============================================================ -->
+          <!-- 🖼️ ADD PHOTOS: drop images into the images/ folder and list  -->
+          <!-- them below. Copy a <div class="slide">...</div> for each.   -->
+          <!-- ============================================================ -->
+          <div class="slide">
+            <img src="images/photo1.jpg" alt="A beautiful memory" onerror="this.parentElement.classList.add('placeholder')" />
+            <div class="slide-caption">The day it all began 💕</div>
+          </div>
+          <div class="slide">
+            <img src="images/photo2.jpg" alt="A beautiful memory" onerror="this.parentElement.classList.add('placeholder')" />
+            <div class="slide-caption">Our little adventures together</div>
+          </div>
+          <div class="slide">
+            <img src="images/photo3.jpg" alt="A beautiful memory" onerror="this.parentElement.classList.add('placeholder')" />
+            <div class="slide-caption">Every smile with you 🌸</div>
+          </div>
+          <div class="slide">
+            <img src="images/photo4.jpg" alt="A beautiful memory" onerror="this.parentElement.classList.add('placeholder')" />
+            <div class="slide-caption">Moments I never want to forget</div>
+          </div>
+          <div class="slide">
+            <img src="images/photo5.jpg" alt="A beautiful memory" onerror="this.parentElement.classList.add('placeholder')" />
+            <div class="slide-caption">Here's to many more, my love ❤️</div>
+          </div>
+        </div>
+        <button class="nav prev" id="prevBtn" aria-label="Previous">‹</button>
+        <button class="nav next" id="nextBtn" aria-label="Next">›</button>
+        <div class="dots" id="dots"></div>
+      </div>
+    </section>
+
+    <!-- REASONS I LOVE YOU -->
+    <section class="section reveal">
+      <h2 class="section-title">Reasons I love you 💖</h2>
+      <ul class="reasons" id="reasons">
+        <!-- ✏️ CUSTOMIZE: edit / add your own reasons here -->
+        <li>The way your smile lights up the entire room.</li>
+        <li>How you make even ordinary days feel like an adventure.</li>
+        <li>Your kindness, and the way you care for everyone around you.</li>
+        <li>The little laugh you do when you're really happy.</li>
+        <li>That you're my best friend and my favorite person, all in one.</li>
+      </ul>
+    </section>
+
+    <!-- COUNTDOWN / WISH -->
+    <section class="section reveal">
+      <h2 class="section-title">A birthday wish 🌟</h2>
+      <p class="big-message">
+        May this year bring you all the happiness you give to everyone else.
+        May your dreams grow bigger and come true, and may you always know
+        how deeply and completely you are loved. Here's to you — today and always.
+      </p>
+      <button id="confettiBtn" class="cta">Tap for a surprise 🎊</button>
+    </section>
+
+    <footer class="footer">
+      <p>Made with ❤️ just for you</p>
+    </footer>
+  </main>
+
+  <canvas id="confettiCanvas"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
