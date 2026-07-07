@@ -321,24 +321,31 @@ body {
   .story-item.right::after { left: 11px; right: auto; }
 }
 
-/* ===== Reasons ===== */
-.reasons { list-style: none; display: grid; gap: 14px; }
+/* ===== Reasons (love poems) ===== */
+.reasons { list-style: none; display: grid; gap: 18px; }
 .reasons li {
   background: var(--card);
-  padding: 18px 22px;
+  padding: 24px 22px;
   border-radius: 16px;
   box-shadow: 0 8px 20px var(--shadow);
   font-weight: 300;
-  font-size: 1.05rem;
-  position: relative;
-  padding-left: 48px;
-  text-align: left;
+  font-size: 1.02rem;
+  line-height: 1.95;
+  font-style: italic;
+  text-align: center;
+  color: var(--text);
 }
-.reasons li::before {
-  content: "💗";
-  position: absolute;
-  left: 16px; top: 50%;
-  transform: translateY(-50%);
+.reason-title {
+  display: block;
+  font-family: "Dancing Script", cursive;
+  font-style: normal;
+  font-size: 1.7rem;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+}
+.reason-title::after {
+  content: " 💗";
+  font-size: 1.1rem;
 }
 
 /* ===== CTA button ===== */
