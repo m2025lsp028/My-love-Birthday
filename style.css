@@ -126,7 +126,11 @@ body {
   padding: 16px;
   box-shadow: 0 14px 36px var(--shadow);
 }
-.slides { position: relative; height: min(70vh, 460px); }
+.slides {
+  position: relative;
+  height: min(70vh, 460px);
+  perspective: 1600px; /* gives the 3D flip real depth */
+}
 .slide {
   position: absolute;
   inset: 0;
@@ -134,8 +138,20 @@ body {
   transition: opacity 0.9s ease;
   border-radius: 14px;
   overflow: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
-.slide.active { opacity: 1; z-index: 1; }
+/* 🃏 3D card flip: each photo swings into view like turning a card */
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+  animation: flipIn 1s cubic-bezier(.2, .75, .25, 1) both;
+}
+@keyframes flipIn {
+  0%   { opacity: 0; transform: rotateY(92deg)  scale(.9); }
+  45%  { opacity: 1; }
+  100% { opacity: 1; transform: rotateY(0deg)   scale(1); }
+}
 .slide img {
   width: 100%;
   height: 100%;
@@ -300,6 +316,7 @@ body {
 
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  .slide.active,
   .slide.active img,
   .slide.active .slide-caption,
   .floaty,
