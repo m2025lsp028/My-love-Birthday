@@ -191,7 +191,17 @@ if (confettiBtn) confettiBtn.addEventListener("click", () => Confetti.burst(160)
   }
 
   // Birthday target (local midnight). Change data-birthday in index.html.
-  const birthday = new Date((cfg.dataset.birthday || "2026-07-12") + "T00:00:00");
+  let birthday = new Date((cfg.dataset.birthday || "2026-07-12") + "T00:00:00");
+
+  // 🎬 Demo mode: add ?demo to the URL to fast-forward the countdown to ~18s
+  // and unlock every surprise card, so you can experience the full journey
+  // (countdown → surprises → confetti unlock → full site) without waiting.
+  const isDemo = /[?&]demo\b/i.test(location.search) ||
+                 location.hash.toLowerCase() === "#demo";
+  if (isDemo) {
+    birthday = new Date(Date.now() + 18000);
+  }
+
   const name = cfg.dataset.name || "My Love";
   const gn = document.getElementById("gateName");
   if (gn) gn.textContent = name;
@@ -265,7 +275,7 @@ if (confettiBtn) confettiBtn.addEventListener("click", () => Confetti.burst(160)
     const now = new Date();
     row.innerHTML = "";
     surprises.forEach((s) => {
-      const isOpen = now >= unlockDateFor(s.day);
+      const isOpen = isDemo || now >= unlockDateFor(s.day);
       const card = document.createElement("button");
       card.className = "surprise-card " + (isOpen ? "unlocked" : "locked");
       card.innerHTML =
