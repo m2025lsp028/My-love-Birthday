@@ -31,7 +31,7 @@
 
 // ---- Reveal sections on scroll ----
 (function revealOnScroll() {
-  const items = document.querySelectorAll(".reveal");
+  const items = document.querySelectorAll(".reveal, .story-item");
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
