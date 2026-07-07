@@ -131,17 +131,44 @@ body {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.9s ease;
   border-radius: 14px;
   overflow: hidden;
 }
-.slide.active { opacity: 1; }
+.slide.active { opacity: 1; z-index: 1; }
 .slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 14px;
   display: block;
+  will-change: transform;
+}
+
+/* 🎬 Animated photos: slow Ken Burns zoom + pan while a slide is showing.
+   Alternating slides pan in opposite directions for variety. */
+.slide.active img {
+  animation: kenburns 6s ease-out both;
+}
+.slide:nth-child(even).active img {
+  animation-name: kenburnsAlt;
+}
+@keyframes kenburns {
+  0%   { transform: scale(1)    translate(0, 0); }
+  100% { transform: scale(1.16) translate(-2.5%, -2%); }
+}
+@keyframes kenburnsAlt {
+  0%   { transform: scale(1.16) translate(2.5%, 2%); }
+  100% { transform: scale(1)    translate(0, 0); }
+}
+
+/* Captions gently slide up when their photo appears */
+.slide.active .slide-caption {
+  animation: captionUp 0.8s ease 0.35s both;
+}
+@keyframes captionUp {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 .slide.placeholder::after {
   content: "🖼️ Add a photo here\A(images/photoX.jpg)";
@@ -269,4 +296,13 @@ body {
   .nav.prev { left: 10px; }
   .nav.next { right: 10px; }
   .big-message { padding: 22px; font-size: 1.05rem; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slide.active img,
+  .slide.active .slide-caption,
+  .floaty,
+  .title span,
+  .scroll-cue { animation: none !important; }
 }

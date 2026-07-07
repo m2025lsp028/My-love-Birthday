@@ -76,7 +76,7 @@
   }
   function restart() {
     clearInterval(timer);
-    timer = setInterval(() => go(idx + 1), 4500);
+    timer = setInterval(() => go(idx + 1), 5500);
   }
 
   show(0);
