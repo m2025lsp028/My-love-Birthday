@@ -203,21 +203,21 @@ if (confettiBtn) confettiBtn.addEventListener("click", () => Confetti.burst(160)
   const gateMsg = document.getElementById("gateMsg");
 
   const messages = [
-    "Something special is coming 💕",
-    "Can't wait to celebrate you 🥳",
-    "Counting every second, my love ⏳",
-    "A surprise made just for you 🎁",
+    "Something special is coming, Akshu 💕",
+    "Can't wait to celebrate you, my jaan 🥳",
+    "Counting every second, wifey ⏳",
+    "A surprise made just for you, Nakchadi 🎁",
   ];
   let msgIdx = 0;
 
   // Daily surprises, keyed by how many days before the birthday they unlock.
   // ✏️ CUSTOMIZE these little messages if you like!
   const surprises = [
-    { day: 5, emoji: "💌", text: "5 days to go, my love. Remember 27th October — your train pulling in at 8:56, that hug, the cappuccino going cold because I couldn't stop looking into your eyes? I'd wait on any platform, in any city, just to hold you again." },
+    { day: 5, emoji: "💌", text: "5 days to go, my jaan. Remember 27th October — your train pulling in at 8:56, that hug, the cappuccino going cold because I couldn't stop looking into your eyes? I'd wait on any platform, in any city, just to hold you again." },
     { day: 4, emoji: "🌸", text: "4 days. I can still feel your arms around me from our very first bike ride — your hand on my shoulder, the open road ahead. With you behind me, I'd ride to the end of the world." },
     { day: 3, emoji: "⭐", text: "3 days, wifey. From the first time you called me 'baby' to that 6:14 morning I called you 'wifey' — every little name you gave me quietly became my favorite word." },
     { day: 2, emoji: "💞", text: "2 days. On Karwachauth we became truly 'us,' and I've thanked the stars every single day since. You are the best 'yes' I've ever heard." },
-    { day: 1, emoji: "🎈", text: "1 more sleep, my love. Tomorrow the whole world gets to celebrate the girl who fed me cake with her own hands and made every ordinary day feel like Mussoorie in the mist. Get ready — tomorrow is all about you. 💝" },
+    { day: 1, emoji: "🎈", text: "1 more sleep, my Akshu. Tomorrow the whole world gets to celebrate the girl who fed me cake with her own hands and made every ordinary day feel like Mussoorie in the mist. Get ready — tomorrow is all about you. 💝" },
   ];
 
   function unlockDateFor(daysBefore) {
