@@ -180,6 +180,16 @@ if (confettiBtn) confettiBtn.addEventListener("click", () => Confetti.burst(160)
   const gateEl = document.getElementById("gate");
   if (!cfg || !gateEl) return;
 
+  // 🔓 Secret preview: add ?preview to the URL (or #preview) to skip the
+  // countdown and view the full site. Great for checking things before the day.
+  const isPreview = /[?&]preview\b/i.test(location.search) ||
+                    location.hash.toLowerCase() === "#preview";
+  if (isPreview) {
+    document.body.classList.remove("gate-active");
+    gateEl.style.display = "none";
+    return;
+  }
+
   // Birthday target (local midnight). Change data-birthday in index.html.
   const birthday = new Date((cfg.dataset.birthday || "2026-07-12") + "T00:00:00");
   const name = cfg.dataset.name || "My Love";
