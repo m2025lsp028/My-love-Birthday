@@ -85,26 +85,35 @@
   next.addEventListener("click", () => go(idx + 1));
 })();
 
-// ---- Music toggle ----
+// ---- Background music (Janam Janam) ----
 (function music() {
   const btn = document.getElementById("musicToggle");
   const audio = document.getElementById("bgMusic");
   if (!btn || !audio) return;
-  let playing = false;
-  btn.addEventListener("click", () => {
-    if (playing) {
-      audio.pause();
-      btn.textContent = "🔇";
-    } else {
-      audio.play().then(() => {
-        btn.textContent = "🎵";
-      }).catch(() => {
-        btn.textContent = "🔇";
-        alert("Add a song file at music/song.mp3 to enable music 🎶");
-      });
-    }
-    playing = !playing;
+  audio.volume = 0.55;
+
+  function play() {
+    return audio.play()
+      .then(() => { btn.textContent = "🎵"; })
+      .catch(() => { btn.textContent = "🔇"; });
+  }
+
+  // Toggle button: play / pause
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (audio.paused) play();
+    else { audio.pause(); btn.textContent = "🔈"; }
   });
+
+  // Browsers block autoplay until the user interacts — so gently start the
+  // song on the very first tap/click anywhere (opening a surprise, etc.).
+  function firstGesture() {
+    if (audio.paused) play();
+    document.removeEventListener("click", firstGesture);
+    document.removeEventListener("touchstart", firstGesture);
+  }
+  document.addEventListener("click", firstGesture);
+  document.addEventListener("touchstart", firstGesture);
 })();
 
 // ---- Confetti ----
