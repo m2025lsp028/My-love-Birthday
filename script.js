@@ -170,3 +170,126 @@ const Confetti = (function () {
 window.addEventListener("load", () => Confetti.burst(120));
 const confettiBtn = document.getElementById("confettiBtn");
 if (confettiBtn) confettiBtn.addEventListener("click", () => Confetti.burst(160));
+
+
+// ============================================================
+// Countdown gate: live timer, daily surprises, auto-unlock
+// ============================================================
+(function gate() {
+  const cfg = document.getElementById("config");
+  const gateEl = document.getElementById("gate");
+  if (!cfg || !gateEl) return;
+
+  // Birthday target (local midnight). Change data-birthday in index.html.
+  const birthday = new Date((cfg.dataset.birthday || "2026-07-12") + "T00:00:00");
+  const name = cfg.dataset.name || "My Love";
+  const gn = document.getElementById("gateName");
+  if (gn) gn.textContent = name;
+
+  const elDays = document.getElementById("cd-days");
+  const elHours = document.getElementById("cd-hours");
+  const elMins = document.getElementById("cd-mins");
+  const elSecs = document.getElementById("cd-secs");
+  const gateMsg = document.getElementById("gateMsg");
+
+  const messages = [
+    "Something special is coming 💕",
+    "Can't wait to celebrate you 🥳",
+    "Counting every second, my love ⏳",
+    "A surprise made just for you 🎁",
+  ];
+  let msgIdx = 0;
+
+  // Daily surprises, keyed by how many days before the birthday they unlock.
+  // ✏️ CUSTOMIZE these little messages if you like!
+  const surprises = [
+    { day: 5, emoji: "💌", text: "5 days to go! Just had to say — you make my whole world brighter every single day. 💕" },
+    { day: 4, emoji: "🌸", text: "4 days! Did you know your smile is my favorite thing in the entire world?" },
+    { day: 3, emoji: "⭐", text: "3 days! I keep thinking about how incredibly lucky I am to have you in my life." },
+    { day: 2, emoji: "💞", text: "2 days! Almost time to celebrate the most amazing person I know — you." },
+    { day: 1, emoji: "🎈", text: "1 more sleep! Get ready... tomorrow is ALL about you, my love. 💝" },
+  ];
+
+  function unlockDateFor(daysBefore) {
+    const d = new Date(birthday);
+    d.setDate(d.getDate() - daysBefore);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  let unlocked = false;
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    document.body.classList.remove("gate-active");
+    gateEl.classList.add("hidden");
+    if (typeof Confetti !== "undefined") {
+      Confetti.burst(220);
+      setTimeout(() => Confetti.burst(180), 600);
+    }
+  }
+
+  function tick() {
+    const now = new Date();
+    const diff = birthday - now;
+    if (diff <= 0) {
+      unlock();
+      return true;
+    }
+    elDays.textContent = pad(Math.floor(diff / 86400000));
+    elHours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    elMins.textContent = pad(Math.floor((diff % 3600000) / 60000));
+    elSecs.textContent = pad(Math.floor((diff % 60000) / 1000));
+    return false;
+  }
+
+  // Surprise cards + popup
+  const row = document.getElementById("surpriseRow");
+  const popup = document.getElementById("surprisePopup");
+  const popupText = document.getElementById("surprisePopupText");
+
+  function renderSurprises() {
+    if (!row) return;
+    const now = new Date();
+    row.innerHTML = "";
+    surprises.forEach((s) => {
+      const isOpen = now >= unlockDateFor(s.day);
+      const card = document.createElement("button");
+      card.className = "surprise-card " + (isOpen ? "unlocked" : "locked");
+      card.innerHTML =
+        '<span class="surprise-emoji">' + (isOpen ? s.emoji : "🔒") + "</span>" +
+        '<span class="surprise-day">Day ' + s.day + "</span>";
+      card.addEventListener("click", () => {
+        if (!popup || !popupText) return;
+        if (isOpen) {
+          popupText.textContent = s.text;
+        } else {
+          const d = unlockDateFor(s.day);
+          const when = d.toLocaleDateString(undefined, { month: "long", day: "numeric" });
+          popupText.textContent = "This surprise unlocks on " + when + ". Come back then! 💗";
+        }
+        popup.classList.add("show");
+      });
+      row.appendChild(card);
+    });
+  }
+
+  if (popup) {
+    popup.addEventListener("click", (e) => {
+      if (e.target === popup || e.target.classList.contains("popup-close")) {
+        popup.classList.remove("show");
+      }
+    });
+  }
+
+  // Init
+  if (tick()) return; // already the birthday -> unlock immediately
+  renderSurprises();
+  setInterval(tick, 1000);
+  setInterval(() => {
+    msgIdx = (msgIdx + 1) % messages.length;
+    if (gateMsg) gateMsg.textContent = messages[msgIdx];
+  }, 3500);
+})();
